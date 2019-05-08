@@ -27,6 +27,9 @@ PVector changing, changingY;
 
 float horizAng = 0, vertAng = 0;
 
+float postAngHoriz = horizAng;
+float postAngVert = vertAng;
+
 void setup() {
   fullScreen(P3D); 
 
@@ -35,7 +38,7 @@ void setup() {
   v = new Viewer(0, 0, 300, width/2, height/2);
   objs.add(new Sphere(50, 0, -300, 100));
   objs.add(new Sphere(0, 50, -200, 115));
-  objs.add(new Sphere(0, 0, 0, 50));
+  //objs.add(new Sphere(0, 0, 0, 50));
 
   xAxis = new PVector(500, 0);
   yAxis = new PVector(500, 0);
@@ -65,6 +68,9 @@ void draw() {
   HUD += '\n' + " VertAng Y-Z: "+ vertAng;
 
   text(HUD, 0, 0, 400, 400);
+
+  String fpsHud = "FPS: " + (int) frameRate;
+  text(fpsHud, width-50, 0, width, 50);
   cam.endHUD(); // always!
 
   if (axis) showAxis();
@@ -77,7 +83,13 @@ void draw() {
   if (splatter) {
     v.splatter();
   }
-  if (spheres) for (MarchingObjects m : objs) m.show();
+  if (spheres) {
+    //directionalLight(51, 102, 126, 0, 0, 1);
+    lights();
+    for (MarchingObjects m : objs) {
+      m.show();
+    }
+  }
 
   for (Point p : points) p.show();
 

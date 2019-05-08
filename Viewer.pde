@@ -30,15 +30,26 @@ public class Viewer {
     horizAng = angle(xAxis, changing);
     vertAng = angle(yAxis, changingY);
 
+    if (horizAng == postAngHoriz && vertAng == postAngVert) return; 
+    else {
+      postAngHoriz = horizAng;
+      postAngVert = vertAng;
+    }
+
+    //new March(x, y, z, horizAng, vertAng).start();
+
     for (int i = -sizex; i < sizex; i+=incr) {
       for (int j = -sizey; j < sizey; j+=incr) {
-        v.march(i + x, j + y, z, horizAng, vertAng);
+        v.march(i + x, j + y, z, horizAng, vertAng, 0);
+        //new March(i + x, j + y, z, horizAng, vertAng).start();
       }
     }
+
     result = createShape();
     result.beginShape(TRIANGLE_FAN);
     result.stroke(0, 255, 0);
     result.fill(0, 255, 0);
+    result.ambient(255);
     for (Point p : points) {
       result.vertex(p.x, p.y, p.z);
     }
@@ -54,36 +65,43 @@ public class Viewer {
     return a;
   }
 
-  void march(float bx, float by, float bz, float ang1, float ang2) {
+  void march(float bx, float by, float bz, float ang1, float ang2, int counter) {
     float w = minDistToScene(bx, by, bz, objs);
-
-    //xAxis.set(w, 0);
-    //ang = angle(xAxis, changing);
-    //angle = ang;
 
     bx -= w * cos(ang1);
     by -= w * cos(ang2);
     bz -= w * sin(ang2);
 
     if (w <= 0.1) {
-      points.add(new Point(bx, by, bz));
+      if (counter < 1) points.add(new Point(bx, by, bz));
+      else points.add(new Point(bx, by, bz, color(255, 0, 255)));
     } else if (bx >= -1000 && bx <= 1000 && by >= -1000 && by <= 1000 && bz >= -1000 && bz <= 1000) {
-      march(bx, by, bz, ang1, ang2);
+      //println("Increasing counter");
+      march(bx, by, bz, ang1, ang2, counter++);
     }
   }
 }
 
 public class Point {
-  float x, y, z; 
+  float x, y, z;
+  color col;
 
   public Point(float x, float y, float z) {
     this.x = x;
     this.y = y;
     this.z = z;
+    this.col = color(0, 255, 0);
+  }
+
+  public Point(float x, float y, float z, color col) {
+    this.x = x;
+    this.y = y;
+    this.z = z;
+    this.col = col;
   }
 
   void show() {
-    fill(0, 255, 0);
+    fill(col);
     noStroke();
     pushMatrix();
     translate(x, y, z);
