@@ -53,3 +53,25 @@ public class Box extends MarchingObjects {
     popMatrix();
   }
 }
+
+public class Plane extends MarchingObjects {
+  int sizew, sizeh;
+
+  public Plane(float x, float y, float z, int sizew, int sizeh) {
+    super(x, y, z, 2);
+
+    this.sizew = sizew;
+    this.sizeh = sizeh;
+  }
+
+  public void show() {
+    stroke(0, 0, 255);
+    noFill();
+    pushMatrix();
+    strokeWeight(1);
+
+    translate(this.x, this.y, this.z);
+    box(this.sizew, this.sizeh, 5);
+    popMatrix();
+  }
+}

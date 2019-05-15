@@ -29,6 +29,7 @@ float horizAng = 0, vertAng = 0;
 
 float postAngHoriz = horizAng;
 float postAngVert = vertAng;
+float tempVal = 0;
 
 void setup() {
   fullScreen(P3D); 
@@ -37,14 +38,16 @@ void setup() {
 
   v = new Viewer(0, 0, 300, width/2, height/2);
   objs.add(new Sphere(50, 0, -300, 100));
-  objs.add(new Sphere(0, 50, -200, 115));
+  //objs.add(new Sphere(0, 50, -200, 115));
   //objs.add(new Sphere(0, 0, 0, 50));
 
   xAxis = new PVector(500, 0);
   yAxis = new PVector(500, 0);
   changing = new PVector(0, 500);
   changingY = new PVector(0, 500);
-  //b = new Box(-50, 0, -300, 50);
+
+  //objs.add(new Plane(0, 0, 0, 100, 100));
+  objs.add(new Box(0, 0, 0, 50));
   //objs.add(new Sphere(-750, 0, -300, 100));
 }
 
@@ -70,7 +73,8 @@ void draw() {
   text(HUD, 0, 0, 400, 400);
 
   String fpsHud = "FPS: " + (int) frameRate;
-  text(fpsHud, width-50, 0, width, 50);
+  fpsHud += '\n' + "Temp Value: " + tempVal;
+  text(fpsHud, width-200, 0, width, 200);
   cam.endHUD(); // always!
 
   if (axis) showAxis();

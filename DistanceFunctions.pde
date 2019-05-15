@@ -17,7 +17,19 @@ float distSphere(float x, float y, float z, Sphere sph) {
 //        \/            \/
 
 float distBox(float x, float y, float z, Box b) {
+  PVector eye = new PVector(x, y, z);
+  PVector center = new PVector(b.x, b.y, b.z);
 
+  PVector o = eye.sub(center);
+  o.setMag(b.size);
+  float ud = max(o.mag(), 0);
+
+  float n = max(max(min(o.x, 0), min(o.y, 0)), min(o.z, 0));
+  tempVal = ud+n;
+  return ud+n;
+}
+
+float distPlane(float x, float y, float z, Plane m) {
   return 0;
 }
 
@@ -32,6 +44,9 @@ float minDistToScene(float x, float y, float z, ArrayList<MarchingObjects> objs)
   case 1:
     shortest = distBox(x, y, z, (Box) objs.get(0));
     break;
+  case 2:
+    shortest = distPlane(x, y, z, (Plane) objs.get(0));
+    break;
   default:
     println("Something is wrong");
     return 1000;
@@ -45,6 +60,9 @@ float minDistToScene(float x, float y, float z, ArrayList<MarchingObjects> objs)
       break;
     case 1:
       temp = distBox(x, y, z, (Box) objs.get(i));
+      break;
+    case 2:
+      temp = distPlane(x, y, z, (Plane) objs.get(i));
       break;
     default:
       temp = 10000;

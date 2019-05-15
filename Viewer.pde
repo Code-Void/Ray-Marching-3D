@@ -76,7 +76,6 @@ public class Viewer {
       if (counter < 1) points.add(new Point(bx, by, bz));
       else points.add(new Point(bx, by, bz, color(255, 0, 255)));
     } else if (bx >= -1000 && bx <= 1000 && by >= -1000 && by <= 1000 && bz >= -1000 && bz <= 1000) {
-      //println("Increasing counter");
       march(bx, by, bz, ang1, ang2, counter++);
     }
   }
