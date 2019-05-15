@@ -37,7 +37,7 @@ void setup() {
   cam = new PeasyCam(this, 500);
 
   v = new Viewer(0, 0, 300, width/2, height/2);
-  objs.add(new Sphere(50, 0, -300, 100));
+  //objs.add(new Sphere(50, 0, -300, 100));
   //objs.add(new Sphere(0, 50, -200, 115));
   //objs.add(new Sphere(0, 0, 0, 50));
 

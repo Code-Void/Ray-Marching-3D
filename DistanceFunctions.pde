@@ -20,7 +20,7 @@ float distBox(float x, float y, float z, Box b) {
   PVector eye = new PVector(x, y, z);
   PVector center = new PVector(b.x, b.y, b.z);
 
-  PVector o = eye.sub(center);
+  PVector o = new PVector(abs(eye.x - center.x), abs(eye.y - center.y), abs(eye.z - center.z));
   o.setMag(b.size);
   float ud = max(o.mag(), 0);
 
@@ -70,7 +70,6 @@ float minDistToScene(float x, float y, float z, ArrayList<MarchingObjects> objs)
 
     if (temp < shortest) shortest = temp;
   }
-
 
   return shortest;
 }

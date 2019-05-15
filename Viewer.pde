@@ -38,12 +38,14 @@ public class Viewer {
 
     //new March(x, y, z, horizAng, vertAng).start();
 
-    for (int i = -sizex; i < sizex; i+=incr) {
-      for (int j = -sizey; j < sizey; j+=incr) {
-        v.march(i + x, j + y, z, horizAng, vertAng, 0);
-        //new March(i + x, j + y, z, horizAng, vertAng).start();
-      }
-    }
+    //for (int i = -sizex; i < sizex; i+=incr) {
+    //  for (int j = -sizey; j < sizey; j+=incr) {
+    //    v.march(i + x, j + y, z, horizAng, vertAng, 0);
+    //    //new March(i + x, j + y, z, horizAng, vertAng).start();
+    //  }
+    //}
+    
+    v.march(x, y, z, horizAng, vertAng, 0);
 
     result = createShape();
     result.beginShape(TRIANGLE_FAN);
@@ -71,6 +73,8 @@ public class Viewer {
     bx -= w * cos(ang1);
     by -= w * cos(ang2);
     bz -= w * sin(ang2);
+    
+    System.out.println(w);
 
     if (w <= 0.1) {
       if (counter < 1) points.add(new Point(bx, by, bz));
