@@ -38,24 +38,28 @@ public class Viewer {
 
     //new March(x, y, z, horizAng, vertAng).start();
 
-    //for (int i = -sizex; i < sizex; i+=incr) {
-    //  for (int j = -sizey; j < sizey; j+=incr) {
-    //    v.march(i + x, j + y, z, horizAng, vertAng, 0);
-    //    //new March(i + x, j + y, z, horizAng, vertAng).start();
-    //  }
-    //}
-    
-    v.march(x, y, z, horizAng, vertAng, 0);
-
-    result = createShape();
-    result.beginShape(TRIANGLE_FAN);
-    result.stroke(0, 255, 0);
-    result.fill(0, 255, 0);
-    result.ambient(255);
-    for (Point p : points) {
-      result.vertex(p.x, p.y, p.z);
+    for (int i = -sizex; i < sizex; i+=incr) {
+      for (int j = -sizey; j < sizey; j+=incr) {
+        v.march(i + x, j + y, z, horizAng, vertAng, 0);
+        //new March(i + x, j + y, z, horizAng, vertAng).start();
+      }
     }
-    result.endShape(CLOSE);
+
+    //v.march(x, y, z, horizAng, vertAng, 0);
+    for (Point p : points) {
+      //stroke(0, 255, 0);
+      p.show();
+    }
+
+    //result = createShape();
+    //result.beginShape(TRIANGLE_FAN);
+    //result.stroke(0, 255, 0);
+    //result.fill(0, 255, 0);
+    //result.ambient(255);
+    //for (Point p : points) {
+    //  result.vertex(p.x, p.y, p.z);
+    //}
+    //result.endShape(CLOSE);
     points.clear();
   }
 
@@ -73,14 +77,16 @@ public class Viewer {
     bx -= w * cos(ang1);
     by -= w * cos(ang2);
     bz -= w * sin(ang2);
-    
-    System.out.println(w);
 
     if (w <= 0.1) {
-      if (counter < 1) points.add(new Point(bx, by, bz));
-      else points.add(new Point(bx, by, bz, color(255, 0, 255)));
+      //println(counter);
+      //if (counter < 10) points.add(new Point(bx, by, bz));
+      //else points.add(new Point(bx, by, bz, color(255, 0, 255)));
+      color c = color(255, 0, (int) map(counter, 0, 25, 0, 255));
+      points.add(new Point(bx, by, bz, c));
     } else if (bx >= -1000 && bx <= 1000 && by >= -1000 && by <= 1000 && bz >= -1000 && bz <= 1000) {
-      march(bx, by, bz, ang1, ang2, counter++);
+      counter++;
+      march(bx, by, bz, ang1, ang2, counter);
     }
   }
 }
@@ -104,11 +110,10 @@ public class Point {
   }
 
   void show() {
-    fill(col);
-    noStroke();
-    pushMatrix();
-    translate(x, y, z);
-    sphere(3);
-    popMatrix();
+    stroke(col);
+    //pushMatrix();
+    point(x, y, z);
+    //sphere(1);
+    //popMatrix();
   }
 }

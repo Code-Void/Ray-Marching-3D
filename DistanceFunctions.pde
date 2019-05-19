@@ -16,21 +16,20 @@ float distSphere(float x, float y, float z, Sphere sph) {
 // |______  /\____/__/\_ \
 //        \/            \/
 
-float distBox(float x, float y, float z, Box b) {
-  PVector eye = new PVector(x, y, z);
-  PVector center = new PVector(b.x, b.y, b.z);
+float distBox(float x, float y, float z, Box box) {
+  PVector p = new PVector(abs(x), abs(y), abs(z));
+  PVector b = new PVector(box.x, box.y, box.z);
 
-  PVector o = new PVector(abs(eye.x - center.x), abs(eye.y - center.y), abs(eye.z - center.z));
-  o.setMag(b.size);
-  float ud = max(o.mag(), 0);
+  PVector d = PVector.sub(p, b);
 
-  float n = max(max(min(o.x, 0), min(o.y, 0)), min(o.z, 0));
-  tempVal = ud+n;
-  return ud+n;
+  tempVal = max(d.mag(), 0) + min(max(d.x, max(d.y, d.z)), 0);
+  return tempVal;
 }
 
 float distPlane(float x, float y, float z, Plane m) {
-  return 0;
+  float dist = (x*m.x + y*m.y + z*m.z) + m.sizeh; 
+  tempVal = dist;
+  return dist;
 }
 
 
